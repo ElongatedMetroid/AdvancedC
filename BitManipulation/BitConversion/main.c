@@ -3,18 +3,23 @@
 #include <math.h>
 
 long long int BinToDec(char *bin);
-//long long int DecToBin(char *dec);
+long long int DecToBin(long long int dec);
+
+__uint8_t maxlen = 255;
 
 int main(void)
 {
-    char bin[255];
-    char dec[255];
+    char bin[maxlen];
+    long long int dec;
 
-    printf("Enter the Binary to be converted to decimal (unsigned)");
+    printf("Enter the Binary to be converted to decimal (unsigned): ");
     scanf("%s", bin);
     printf("%lld\n", BinToDec(bin));
-    //scanf("%s", dec);
-    //printf("%lld\n", DecToBin(dec));
+
+    printf("\nEnter the Decimal to be converted to Binary:");
+    scanf("%lld", &dec);
+    printf("%lld\n", DecToBin(dec));
+
     return 0;
 }
 
@@ -33,4 +38,20 @@ long long int BinToDec(char * bin)                                              
     }
 
     return dec;
+}
+
+long long int DecToBin(long long int dec)
+{
+    long long bin = 0;
+    int remainder, i = 1;
+
+    while(dec != 0)
+    {
+        remainder = dec%2;
+        dec = dec / 2;
+        bin += remainder * i;
+        i *= 10;
+    }
+
+    return bin;
 }
