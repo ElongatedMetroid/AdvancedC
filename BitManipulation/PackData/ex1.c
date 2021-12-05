@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+#define BYTE_MASK 0xff
+
 int main(void)
 {
     unsigned int packedData; //32 bits on most systems
@@ -13,7 +15,7 @@ int main(void)
 
     int n;
 
-    n = (packedData >> 18) & 0xff;  //to ensure that n is between 0 and 255 you can & it with 0xff (255)
+    n = (packedData >> 18) & BYTE_MASK;  //to ensure that n is between 0 and 255 you can & it with 0xff (255)
 
     printf("%i\n", n);
 
