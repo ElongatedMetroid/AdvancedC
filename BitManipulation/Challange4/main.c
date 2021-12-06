@@ -11,7 +11,7 @@ struct packed_struct
     unsigned int :2;
 };
 
-void printPackedStruct(struct packed_struct *packed_data);
+void printPackedStruct(const struct packed_struct *packed_data);
 
 int main(void)
 {
@@ -40,20 +40,14 @@ int main(void)
     return 0;
 }
 
-void printPackedStruct(struct packed_struct *packed_data)
+void printPackedStruct(const struct packed_struct *packed_data)
 {
     const char *colors[] = {"Black", "Red", "Green", "Yellow", "Blue", "Magenta", "Cyan", "White"};
     const char *borderStyle[] = {"Solid", "Dotted", "Dashed"};
 
-    if(packed_data->is_opaque == 1)
-        printf("Box is opaque\n");
-    else
-        printf("Box is transparent\n");
+    printf("Box is %s\n", packed_data->is_opaque == 1 ? "opaque" : "transparent");
     printf("The fill color is %s\n", colors[packed_data->fill_color]);
-    if(packed_data->show_border == 1)
-        printf("The border is showing\n");
-    else
-        printf("The border is not showing\n");
+    printf("The border is %s\n", packed_data->show_border == 1 ? "showing" : "is not showing");
     printf("The border style is %s\n", borderStyle[packed_data->border_style]);
     printf("The border color is %s\n", colors[packed_data->border_color]); 
 }
