@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-struct packed_struct
+struct packed_struct                //16 bits in total
 {
     unsigned int is_opaque:1;       // 0 indicates transparentcy
     unsigned int fill_color:3;      // 0Blue0Green0Red

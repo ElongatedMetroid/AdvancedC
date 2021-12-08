@@ -86,7 +86,7 @@ void OnesAndTwosComplement()
     printf("%d\n", result);
 
     /*  ONES COMPLEMENT
-    0000 0011    = 154
+    0000 0011    = 3
     --------
     1111 1100    = 252
     */
