@@ -3,34 +3,33 @@
 #include <ctype.h>
 
 int main(){
-    FILE *fp;
-    char buf[255];
-    char fileLocation[255];
+    FILE *origfp;
+    FILE *newfp;
+    char ch = '\0';
 
-    printf("Enter the file name or location you want to read from and to.\n");
-    scanf("%s", fileLocation);
-
-    fp = fopen(fileLocation, "r+");
-    if(!fp){
-        printf("Error in opening the file!\n");
+    origfp = fopen("lowercase.txt", "r+");
+    if(!origfp){
+        printf("Error eccoured in opening lowercase.txt\n");
+        exit(1);
+    }
+    newfp = fopen("temp.txt", "w+");
+    if(!newfp){
+        printf("Error eccoured in opening temp.txt\n");
         exit(1);
     }
 
-    for(int i = 0; (buf[i] = fgetc(fp)) != EOF; i++);
-
-    fclose(fp);
-
-    for(int i = 0; buf[i] != '\0'; i++){
-        toupper(buf[i]);
+    while(ch != EOF){
+        ch  = fgetc(origfp);
+        if(isupper(ch))
+            fputc(toupper(ch), newfp);
+        else
+            fputc(tolower(ch), newfp);
     }
 
-    fp = fopen(fileLocation, "w");
-    if(!fp){
-        printf("Error in opening the file!\n");
-        exit(1);
-    }
-    
-    for(int i = 0; buf[i] != '\0'; i++){
-        fputc(buf[i], fp);
-    }
+    remove("lowercase.txt");
+
+    rename("temp.txt", "uppercase.txt");
+
+    fclose(origfp);
+    fclose(newfp);
 }
