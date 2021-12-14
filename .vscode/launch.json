@@ -8,8 +8,11 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}//main",
-            "args": [],
+            "program": "${workspaceFolder}/InputAndOutput/StringFunctions/Challange/main",
+            "args": [
+                "o",
+                "file.txt"
+            ],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
             "environment": [],
