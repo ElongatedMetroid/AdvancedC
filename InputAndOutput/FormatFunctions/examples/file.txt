@@ -1,0 +1,12 @@
+The loop counter is equal to 1
+The loop counter is equal to 2
+The loop counter is equal to 3
+The loop counter is equal to 4
+The loop counter is equal to 5
+The loop counter is equal to 6
+The loop counter is equal to 7
+The loop counter is equal to 8
+The loop counter is equal to 9
+The loop counter is equal to 10
+hello
+1
