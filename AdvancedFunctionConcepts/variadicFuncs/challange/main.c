@@ -21,7 +21,7 @@ double addAll(double numArgs, ...){
         val = va_arg(parg, double);
         sum += val;
     }
-
+//Hello myself! - from your other computer
     va_end(parg);
 
     return sum;
