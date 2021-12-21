@@ -11,18 +11,16 @@ int main(){
 }
 
 double addAll(double numArgs, ...){
-    va_list parg;
-    double sum;
-    double val;
+    va_list argPtr;
+    va_start(argPtr, numArgs);
 
-    va_start(parg, numArgs);
+    double sum;
 
     for(int i = 0; numArgs > i; i++){
-        val = va_arg(parg, double);
-        sum += val;
+        sum += va_arg(argPtr, double);
     }
 //Hello myself! - from your other computer
-    va_end(parg);
+    va_end(argPtr);
 
     return sum;
 }
