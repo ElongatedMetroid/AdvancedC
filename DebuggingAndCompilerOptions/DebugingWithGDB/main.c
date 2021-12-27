@@ -10,6 +10,10 @@
 
 //if you have multiple variables with the same name do the following 'print main::i' or 'print func::i'
 
+//to set break points do 'break <line num>', press c to continue, to delete a break point use 'clear <line num>'
+
+//use 's' to step through one line at a time 
+
 //type 'quit' to exit gdb
 
 #include <stdio.h>
