@@ -1,7 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define DEBUG(fmt, ...) fprintf(stderr, fmt, __VA_ARGS__)
+#ifdef DEBON
+  #define DEBUG(fmt, ...) fprintf(stderr, fmt, __VA_ARGS__)
+#else
+  #define DEBUG(tmp, ...) do{}while(0)
+#endif //DEBON
 
 int sum(int x, int y, int z) {
   char c = 2;
