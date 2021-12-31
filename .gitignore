@@ -1,2 +1,5 @@
 #ignore vscode config
 .vscode
+
+#ignore builds
+*.out
