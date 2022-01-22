@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//choice defines
 #define INSERT 1
 #define INSERT_END 2
 #define INSERT_BEG 3
@@ -97,13 +98,17 @@ int main(void){
 
                 //display menu
                 printf("Enter your choice:\n"
-                    "\t1 to insert an element into the list.\n"
-                    "\t2 to delete an element from the list.\n"
-                    "\t3 to end.\n"
+                    "\t1 to insert an element into the list in alphabetical order.\n"
+                    "\t2 to insert an element at the end of the list.\n"
+                    "\t3 to insert an element at the beginning of the list.\n"
+                    "\t4 to delete an element from the list.\n"
+                    "\t5 to delete an element from the begining of the list.\n"
+                    "\t6 to end.\n"
                 );
                 break;
         }
         printf("? ");
+        choice = '\0';  //just to be safe
         scanf("%d", &choice);
     }
 
@@ -126,12 +131,12 @@ void insert(ListNodePtr *head, char value){
         prevPtr = NULL;
         currPtr = *head;
 
-        while(currPtr != NULL && value > currPtr->data){
-            prevPtr = currPtr;          //Walk to ...
-            currPtr = currPtr->nextPtr; //... next node
+        while(currPtr != NULL && value > currPtr->data){    // ...value > curPtr->data... sort in alphabetical order 
+            prevPtr = currPtr;          //send currPtr back
+            currPtr = currPtr->nextPtr; //set currPtr to the next ptr since it was send back 
         }
 
-        //insert new node at beginning of list
+        //insert new node at beginning of list if can
         if(prevPtr == NULL){
             newPtr->nextPtr = *head;
             *head = newPtr;
@@ -141,23 +146,23 @@ void insert(ListNodePtr *head, char value){
             newPtr->nextPtr = currPtr;
         }
     }
-    else
+    else    //malloc failed
         printf("%c not inserted. No memory available.\n", value);
 }
 
 void insertAtEnd(ListNodePtr *head, char value){
     ListNodePtr current = *head;
 
-    if(current != NULL){        //if list is not empty
+    if(current != NULL){                //if list is not empty
         while(current->nextPtr != NULL)
-            current = current->nextPtr;
+            current = current->nextPtr; //move current right twords end of list
 
+        //When at end of list...
         current->nextPtr = malloc(sizeof(node_t));
         current->nextPtr->data = value;
         current->nextPtr->nextPtr = NULL;
-
     }
-    else{
+    else{   //if head is NULL
         current = malloc(sizeof(node_t));
         current->data = value;
         current->nextPtr = NULL;
@@ -168,7 +173,7 @@ void insertAtEnd(ListNodePtr *head, char value){
 void insertAtBeginning(ListNodePtr *head, char value){
     ListNodePtr new_node = malloc(sizeof(node_t));
     new_node->data = value;
-    new_node->nextPtr = *head;
+    new_node->nextPtr = *head;  //swap places with head (start)
     *head = new_node;
 }
 
@@ -178,10 +183,10 @@ char delete(ListNodePtr *head, char value){
     ListNodePtr currPtr;    //pointer to current node in list
 
     //delete first node
-    if(value == (*head)->data){
-        tempPtr = *head;    //hold onto node being removed
-        *head = (*head)->nextPtr;   //de thread the node
-        free(tempPtr);      //free the de threaded node
+    if(value == (*head)->data){     //if value is equal to head nodes data
+        tempPtr = *head;            //hold onto node being removed
+        *head = (*head)->nextPtr;   //set head to the value of the next pointer
+        free(tempPtr);              //free tempPtr
         return value;
     }
     else{
@@ -190,8 +195,8 @@ char delete(ListNodePtr *head, char value){
 
         //loop to find correct location in list
         while(currPtr != NULL && currPtr->data != value){
-            prevPtr = currPtr;
-            currPtr = currPtr->nextPtr;
+            prevPtr = currPtr;          //move currPtr closer to front
+            currPtr = currPtr->nextPtr; //move currPtr right (away from front)
         }
         if(currPtr != NULL){
             tempPtr = currPtr;
@@ -208,7 +213,7 @@ char deleteAtBeginning(ListNodePtr *head){
     ListNodePtr tempPtr = NULL;     //temp node pointer
 
     if(head == NULL)
-        return '\0';
+        return '\0';                //return NULL if head is empty
     else{
         tempPtr = *head;            //hold onto node being deleted
         *head = (*head)->nextPtr;   //de-thread the node
