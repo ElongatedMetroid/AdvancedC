@@ -7,7 +7,9 @@
 #define INSERT_BEG 3
 #define DEL 4
 #define DEL_BEG 5
-#define EXIT 6
+#define SAVE_LIST 6
+#define LOAD_LIST 7
+#define EXIT 8
 
 typedef struct node{
     char data;
@@ -23,6 +25,8 @@ char delete(ListNodePtr *head, char value);
 char deleteAtBeginning(ListNodePtr *head);
 int isEmpty(ListNodePtr head);
 void printList(ListNodePtr currentPtr);
+void saveList(ListNodePtr currentPtr);
+void loadList(ListNodePtr *head);
 
 int main(void){
     ListNodePtr head = NULL;    //initially there are no nodes
@@ -35,7 +39,9 @@ int main(void){
         "\t3 to insert an element at the beginning of the list.\n"
         "\t4 to delete an element from the list.\n"
         "\t5 to delete an element from the begining of the list.\n"
-        "\t6 to end.\n"
+        "\t6 to save your list to a file.\n"
+        "\t7 to load a list from a file.\n"
+        "\t8 to end.\n"
     );
 
     printf(":: ");
@@ -91,6 +97,21 @@ int main(void){
                 }
                 else
                     printf("List is empty");
+                break;
+
+            case SAVE_LIST:
+                if(!isEmpty(head)){
+                    saveList(head);
+                    printf("List saved!\n");
+                }
+                else
+                    printf("List is empty");
+                break;
+            
+            case LOAD_LIST:
+                loadList(&head);
+                printf("List loaded!\n");
+                printList(head);
                 break;
 
             default:
@@ -238,4 +259,49 @@ void printList(ListNodePtr currentPtr){
 
         printf("NULL\n\n");
     }
+}
+
+void saveList(ListNodePtr currentPtr){
+    FILE *display = NULL;
+    FILE *save = NULL;
+
+    if(!(display = fopen("list", "w+")) || !(save = fopen(".listsav", "w+"))){
+        fprintf(stderr, "Error in opening file to save list (unhidden list)!");
+        exit(EXIT_FAILURE);
+    }
+
+    fprintf(display, "This list is for display only and is not read by the program. View \".listsav\" to edit your linked list\n\n");
+
+    if(currentPtr  == NULL)
+        printf("List is empty.\n\n");
+    else{
+        while(currentPtr != NULL){
+            fprintf(display, "%c --> ", currentPtr->data);
+            fprintf(save, "%c", currentPtr->data);
+            currentPtr = currentPtr->nextPtr;
+        }
+
+        fputc('\0', save);
+        fprintf(display, "NULL");
+    }
+    fclose(display);
+    fclose(save);
+}
+
+void loadList(ListNodePtr *head){
+    char ch = 'c';
+    FILE *fp = NULL;
+
+    if(!(fp = fopen(".listsav", "r"))){
+        fprintf(stderr, "Error in opening file to load list!");
+        exit(EXIT_FAILURE);
+    }
+
+    while(ch != '\0'){
+        ch = fgetc(fp);
+        if(ch != '\0')              //another check, so there is no blank
+            insertAtEnd(head, ch);
+    }
+
+    fclose(fp);
 }
