@@ -266,7 +266,7 @@ void saveList(ListNodePtr currentPtr){
     FILE *save = NULL;
 
     if(!(display = fopen("list", "w+")) || !(save = fopen(".listsav", "w+"))){
-        fprintf(stderr, "Error in opening file to save list (unhidden list)!");
+        fprintf(stderr, "Error in opening file to save list!\n");
         exit(EXIT_FAILURE);
     }
 
