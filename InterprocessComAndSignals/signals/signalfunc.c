@@ -6,7 +6,7 @@ void handler_divideByZero(int signum);
 
 int main(){
     int result = 0;
-    int v1, v2;
+    int v1 = 0, v2 = 0;
     void (*sigHandlerReturn)(int);
 
     sigHandlerReturn = signal(SIGFPE, handler_divideByZero);
